@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# Recreate my Pi setup without the local Agoda GenAI gateway/proxy extension.
+# Recreate my Pi setup.
 #
 # Override example:
 #   PI_CODING_AGENT_DIR="$HOME/.pi/agent-work" bash pi/install-pi.sh
@@ -55,7 +55,7 @@ for package_source in "${PI_PACKAGES[@]}"; do
   pi install "$package_source"
 done
 
-log "Normalizing Pi settings and excluding the GenAI gateway/proxy"
+log "Normalizing Pi package settings"
 PI_SETTINGS_FILE="${PI_CONFIG_DIR}/settings.json" node <<'NODE'
 const fs = require('fs');
 const path = require('path');
@@ -101,11 +101,6 @@ function identity(entry) {
   return npmIdentity(source) || source;
 }
 
-function isSkippedGenaiGateway(entry) {
-  const source = sourceOf(entry);
-  return source === '../extensions/agoda-genai-gateway.ts' || source.endsWith('/agoda-genai-gateway.ts');
-}
-
 let settings = {};
 if (fs.existsSync(settingsFile)) {
   settings = JSON.parse(fs.readFileSync(settingsFile, 'utf8'));
@@ -115,7 +110,7 @@ const desiredIds = new Set(desiredEntries.map(identity));
 const existingPackages = Array.isArray(settings.packages) ? settings.packages : [];
 
 settings.packages = [
-  ...existingPackages.filter((entry) => !isSkippedGenaiGateway(entry) && !desiredIds.has(identity(entry))),
+  ...existingPackages.filter((entry) => sourceOf(entry).startsWith('npm:') && !desiredIds.has(identity(entry))),
   ...desiredEntries,
 ];
 
@@ -131,8 +126,7 @@ cat <<'EOF'
 
 Pi setup complete.
 
-Notes:
-- The local Agoda GenAI gateway/proxy extension was intentionally excluded.
+Next steps:
 - Auth is machine-local. Run `pi`, then `/login`, if this machine is not authenticated yet.
 - Secrets/runtime files such as auth.json, OAuth tokens, mcp.json, models.json, caches, and sessions are not managed by this script.
 EOF

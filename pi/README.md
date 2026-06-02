@@ -22,10 +22,6 @@ bash pi/install-pi.sh
   - `npm:pi-powerline-footer@0.5.6`
   - `npm:pi-intercom@0.6.0`
 
-## Intentionally excluded
-
-The local Agoda GenAI gateway/proxy extension (`agoda-genai-gateway.ts`) is intentionally not installed or preserved by the script.
-
 ## After install
 
 Authenticate Pi separately on each machine:
