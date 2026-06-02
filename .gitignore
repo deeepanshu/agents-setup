@@ -1,0 +1,26 @@
+# Local environment and secrets
+.env
+.env.*
+*.local
+*.local.*
+
+# Pi runtime/config state should not be committed
+.pi/
+auth.json
+tokens.json
+sessions/
+mcp-oauth/
+mcp-cache.json
+mcp-onboarding.json
+models.json
+mcp.json
+
+# Dependency/install artifacts
+node_modules/
+npm/
+git/
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/
