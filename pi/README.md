@@ -8,7 +8,7 @@ bash pi/install-pi.sh
 
 ## What it installs
 
-- Pi CLI: `@earendil-works/pi-coding-agent@0.78.0`
+- Pi CLI: latest `@earendil-works/pi-coding-agent` from npm
 - Pi packages/extensions:
   - `npm:pi-mcp-adapter@2.8.0`
   - `npm:pi-subagents@0.27.0`

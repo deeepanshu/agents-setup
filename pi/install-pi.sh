@@ -3,11 +3,9 @@ set -Eeuo pipefail
 
 # Recreate my Pi setup without the local Agoda GenAI gateway/proxy extension.
 #
-# Override examples:
-#   PI_VERSION=latest bash pi/install-pi.sh
+# Override example:
 #   PI_CODING_AGENT_DIR="$HOME/.pi/agent-work" bash pi/install-pi.sh
 
-PI_VERSION="${PI_VERSION:-0.78.0}"
 PI_CONFIG_DIR="${PI_CODING_AGENT_DIR:-${HOME}/.pi/agent}"
 
 # Keep Pi startup quiet and avoid install/update telemetry while this setup runs.
@@ -45,8 +43,8 @@ log "Checking prerequisites"
 require_command node
 require_command npm
 
-log "Installing Pi CLI @earendil-works/pi-coding-agent@${PI_VERSION}"
-npm install -g --ignore-scripts "@earendil-works/pi-coding-agent@${PI_VERSION}"
+log "Installing latest Pi CLI @earendil-works/pi-coding-agent"
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 
 require_command pi
 mkdir -p "$PI_CONFIG_DIR"
